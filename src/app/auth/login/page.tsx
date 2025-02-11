@@ -40,15 +40,15 @@ export default function Login() {
   const handleGoogleSubmit = async () => {
     console.log("google submit");
     setError("");
-    // try {
-    //   const data = await authApi.oauth(formdata.rememberMe);
-    // } catch (error: any) {
-    //   if (error.response) {
-    //     setError(error.response.data);
-    //   } else {
-    //     setError("An unexpected error occured");
-    //   }
-    // }
+    try {
+      const data = await authApi.oauth(formdata.rememberMe);
+    } catch (error: any) {
+      if (error.response) {
+        setError(error.response.data);
+      } else {
+        setError("An unexpected error occured");
+      }
+    }
   };
 
   return (

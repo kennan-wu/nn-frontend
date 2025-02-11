@@ -15,7 +15,7 @@ class AuthApi {
     username: string;
   }) {
     try {
-      const response = await this.api.post("/signup", credentials);
+      const response = await this.api.post("/auth/signup", credentials);
       return response.data;
     } catch (error) {
       throw error;
@@ -24,7 +24,7 @@ class AuthApi {
 
   async oauth(refresh: boolean) {
     const url = new URL(
-      `${process.env.NEXT_PUBLIC_AUTH_API_BASE_URL}/oauth/authorize`
+      `${process.env.NEXT_PUBLIC_AUTH_API_BASE_URL}/auth/oauth/authorize`
     );
     if (refresh) {
       url.searchParams.append("refresh", "true");
@@ -34,10 +34,26 @@ class AuthApi {
 
   async login(credentials: { email: string; password: string }) {
     try {
-      const response = await this.api.post("/login", credentials);
+      const response = await this.api.post("/auth/login", credentials);
       return response.data;
     } catch (error) {
       throw error;
+    }
+  }
+
+  async validateJwt() {
+    try {
+      const response = await this.api.get("/me", { withCredentials: true });
+      return response.data;
+    } catch (error: any) {
+      if (
+        error.response &&
+        (error.response.status === 401 || error.response.status === 403)
+      ) {
+        return null;
+      } else {
+        throw error;
+      }
     }
   }
 }
