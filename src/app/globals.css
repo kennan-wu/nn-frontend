@@ -42,7 +42,7 @@ body {
   gap: 0.25rem;
 }
 
-@keyframes panAndZoom {
+@keyframes pan {
   0% {
     background-position: 0% 0%;
     opacity: 0;
@@ -61,13 +61,13 @@ body {
   }
 }
 
-.bg-pan-zoom {
-  animation: panAndZoom 45s linear infinite;
-  background-image: url("/images/gold_leaf_brain_1.jpg");
+.bg-pan-slideshow {
+  animation: pan 60s linear infinite;
   background-size: 150%;
-  transition: background-image 0.5s ease-in-out;
 }
 
-/* .bg-pan-zoom:nth-child(2) {
-  background-image: url("/images/gold_leaf_brain_2.png");
-} */
+@media (min-width: 640px) {
+  .auth-window {
+    width: 40rem;
+  }
+}
