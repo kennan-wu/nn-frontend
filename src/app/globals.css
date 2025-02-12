@@ -45,29 +45,26 @@ body {
 @keyframes panAndZoom {
   0% {
     background-position: 0% 0%;
-    background-size: 110%;
     opacity: 0;
   }
-  50% {
-    background-position: 50% 50%;
-    background-size: 110%;
+  10% {
+    background-position: 10% 10%;
     opacity: 1;
   }
-  75% {
-    background-position: 75% 75%;
-    background-size: 110%;
+  90% {
+    background-position: 90% 90%;
     opacity: 1;
   }
   100% {
     background-position: 100% 100%;
-    background-size: 110%;
     opacity: 0;
   }
 }
 
 .bg-pan-zoom {
-  animation: panAndZoom 30s linear infinite;
-  background-image: url("/images/gold_leaf_brain_1.png");
+  animation: panAndZoom 45s linear infinite;
+  background-image: url("/images/gold_leaf_brain_1.jpg");
+  background-size: 150%;
   transition: background-image 0.5s ease-in-out;
 }
 

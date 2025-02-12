@@ -43,7 +43,7 @@ export default function Login() {
 
     setError("");
     try {
-      const data = await authApi.oauth(formdata.rememberMe);
+      const data = await authApi.oauth(true);
     } catch (error: any) {
       if (error.response) {
         setError(error.response.data);
