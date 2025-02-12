@@ -3,8 +3,10 @@ import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
 import authApi from "@/services/auth-service-apis";
+import { useRouter } from "next/navigation";
 
 export default function Signup() {
+  const router = useRouter();
   const [formdata, setFormData] = useState({
     email: "",
     name: "",
@@ -36,29 +38,37 @@ export default function Signup() {
     confirmInput.reportValidity();
   };
 
-  const handleSignUpSubmit = async (event: React.FormEvent) => {
+  const handleSignupSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    console.log("signup called");
     setError("");
 
-    const credentials = {
+    const signupCredentials = {
       email: formdata.email,
       username: formdata.name,
       password: formdata.password,
     };
 
     try {
-      const data = await authApi.signup(credentials);
+      const signupData = await authApi.signup(signupCredentials);
+      const loginCredentials = {
+        email: formdata.email,
+        password: formdata.password,
+      };
+      const loginData = await authApi.login(
+        loginCredentials,
+        formdata.rememberMe
+      );
+      router.push("/");
     } catch (error: any) {
-      if (error.response) {
-        setError(error.response.data);
-      } else {
-        setError("An unexpected error occured");
-      }
+      setError(error.message);
     }
   };
 
-  const handleGoogleSubmit = async () => {
+  const handleGoogleSubmit = async (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+
     setError("");
     try {
       const data = await authApi.oauth(formdata.rememberMe);
@@ -75,7 +85,7 @@ export default function Signup() {
     <div className="w-full h-full flex flex-col font-bold text-black my-5">
       <p className="text-2xl">Sign Up</p>
       <form
-        onSubmit={handleSignUpSubmit}
+        onSubmit={handleSignupSubmit}
         className="flex flex-col my-5 gap-5 text-sm"
       >
         <button

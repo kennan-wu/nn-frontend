@@ -8,9 +8,15 @@ export default async function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
   const isPublicRoute = publicRoutes.includes(path);
   try {
-    const user = await authApi.validateJwt();
     const cookieStore = await cookies();
-    const id_token = cookieStore.get("id_token");
+    const idToken = cookieStore.get("id_token")?.value;
+    const refreshToken = cookieStore.get("refresh_token")?.value;
+    let user = null;
+    if (idToken) {
+      user = await authApi.validateJwt(idToken);
+    } else if (refreshToken) {
+      // TODO: get new id token
+    }
 
     if (!isPublicRoute && !user) {
       console.log("user is not authenticated");

@@ -3,8 +3,11 @@ import { useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import Link from "next/link";
 import authApi from "@/services/auth-service-apis";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
+  const router = useRouter();
+
   const [formdata, setFormData] = useState({
     email: "",
     password: "",
@@ -18,7 +21,6 @@ export default function Login() {
 
   const handleLoginSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    console.log("login called");
     setError("");
 
     const credentials = {
@@ -27,18 +29,18 @@ export default function Login() {
     };
 
     try {
-      const data = await authApi.login(credentials);
+      const data = await authApi.login(credentials, formdata.rememberMe);
+      router.push("/");
     } catch (error: any) {
-      if (error.response) {
-        setError(error.response.data);
-      } else {
-        setError("An unexpected error occured");
-      }
+      setError(error.message);
     }
   };
 
-  const handleGoogleSubmit = async () => {
-    console.log("google submit");
+  const handleGoogleSubmit = async (
+    event: React.MouseEvent<HTMLButtonElement>
+  ) => {
+    event.preventDefault();
+
     setError("");
     try {
       const data = await authApi.oauth(formdata.rememberMe);

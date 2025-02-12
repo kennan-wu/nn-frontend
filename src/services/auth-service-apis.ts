@@ -1,4 +1,4 @@
-import axios from "axios";
+import axios, { AxiosRequestConfig } from "axios";
 
 class AuthApi {
   private api;
@@ -17,8 +17,14 @@ class AuthApi {
     try {
       const response = await this.api.post("/auth/signup", credentials);
       return response.data;
-    } catch (error) {
-      throw error;
+    } catch (error: any) {
+      if (error.response) {
+        const statusCode = error.response.status;
+        if (statusCode === 409) {
+          throw new Error("Email already exists");
+        }
+        throw new Error("An unexpected error occured when trying to log in.");
+      }
     }
   }
 
@@ -32,18 +38,40 @@ class AuthApi {
     window.location.href = url.toString();
   }
 
-  async login(credentials: { email: string; password: string }) {
+  async login(
+    credentials: { email: string; password: string },
+    refresh: boolean
+  ) {
+    const params: { refresh?: boolean } = {};
+    if (refresh) {
+      params.refresh = true;
+    }
+
+    const config: AxiosRequestConfig = {
+      params: params,
+      withCredentials: true,
+    };
+
     try {
-      const response = await this.api.post("/auth/login", credentials);
+      const response = await this.api.post("/auth/login", credentials, config);
       return response.data;
-    } catch (error) {
-      throw error;
+    } catch (error: any) {
+      if (error.response) {
+        const statusCode = error.response.status;
+        if (statusCode === 401) {
+          throw new Error("Invalid Password or Username.");
+        }
+        throw new Error("An unexpected error occurred");
+      }
     }
   }
 
-  async validateJwt() {
+  async validateJwt(idToken: string) {
     try {
-      const response = await this.api.get("/me", { withCredentials: true });
+      const response = await this.api.get("/me", {
+        headers: { Cookie: `id_token=${idToken}` },
+        withCredentials: true,
+      });
       return response.data;
     } catch (error: any) {
       if (
