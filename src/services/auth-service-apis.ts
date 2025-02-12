@@ -84,6 +84,16 @@ class AuthApi {
       }
     }
   }
+
+  async refreshJwt(refreshToken: string) {
+    const response = await this.api.post("/auth/refresh", {
+      headers: {
+        Cookie: `refresh_token=${refreshToken}`,
+      },
+      withCredentials: true,
+    });
+    return response.data;
+  }
 }
 
 const authApi = new AuthApi();
