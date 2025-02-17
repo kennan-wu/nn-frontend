@@ -3,16 +3,23 @@ import { usePathname } from "next/navigation";
 import DashboardSidebar from "../components/sidebar";
 import DashboardHeader from "../components/header";
 import DashboardGrid from "../components/dashboard";
+import { use } from "react";
 
-export default function Dashboard({ slug }: { slug: string[] }) {
-  const rawPathname = usePathname().slice(1);
-  const pathname = rawPathname.charAt(0).toUpperCase() + rawPathname.slice(1);
+export default function Dashboard({
+  params,
+}: {
+  params: Promise<{ slug: string[] }>;
+}) {
+  const unwrappedParams = use(params);
+  const { slug } = unwrappedParams;
 
   return (
     <div className="bg-white flex flex-row">
-      <DashboardSidebar />
+      <DashboardSidebar selected={slug[0]} />
       <div className="flex flex-col w-full">
-        <DashboardHeader title={pathname} />
+        <DashboardHeader
+          title={slug[0].charAt(0).toUpperCase() + slug[0].slice(1)}
+        />
         <DashboardGrid />
       </div>
     </div>
