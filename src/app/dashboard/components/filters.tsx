@@ -9,6 +9,7 @@ export default function Filters() {
           <select>
             <option>Projects</option>
             <option>Templates</option>
+            <option>All</option>
           </select>
         </div>
         <div>
