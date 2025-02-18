@@ -27,6 +27,8 @@ export default async function middleware(req: NextRequest) {
     if (!isPublicRoute && !user) {
       return redirectToLogin(req);
     }
+
+    req.headers.set("X-User-ID", user._id);
   } catch (error) {
     console.log("An error occurred:", error);
   }
