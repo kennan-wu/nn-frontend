@@ -1,5 +1,4 @@
 "use client";
-import { usePathname } from "next/navigation";
 import DashboardSidebar from "../components/sidebar";
 import DashboardHeader from "../components/header";
 import DashboardGrid from "../components/dashboard";
