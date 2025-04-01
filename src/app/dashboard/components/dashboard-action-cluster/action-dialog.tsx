@@ -7,6 +7,7 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import React from "react";
+import { useDialogContext } from "./action-button-cluster";
 
 export interface ActionDialogProps {
   title: string;
@@ -17,6 +18,13 @@ export interface ActionDialogProps {
 }
 
 export default function ActionDialog(props: ActionDialogProps) {
+  const { resetForm } = useDialogContext();
+
+  const handleSubmit = () => {
+    props.onSubmit();
+    resetForm();
+  };
+
   return (
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>
@@ -25,7 +33,9 @@ export default function ActionDialog(props: ActionDialogProps) {
       </DialogHeader>
       {props.children}
       <DialogFooter>
-        <Button type="submit">{props.submitTitle}</Button>
+        <Button type="submit" onClick={handleSubmit}>
+          {props.submitTitle}
+        </Button>
       </DialogFooter>
     </DialogContent>
   );

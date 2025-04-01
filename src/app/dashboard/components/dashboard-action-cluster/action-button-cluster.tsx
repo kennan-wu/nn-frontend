@@ -7,13 +7,36 @@ import ActionDialog from "./action-dialog";
 import NameDescriptionForm from "../name-description-form";
 import { createContext, useContext, useState } from "react";
 
-interface DialogContextType {
+type DialogContextType = {
   formData: Record<string, any>;
   setFormData: (data: Record<string, any>) => void;
   resetForm: () => void;
-}
+  initializeForm: (formName: string) => void;
+};
 
 const DialogContext = createContext<DialogContextType | undefined>(undefined);
+
+type NameDescriptionForm = {
+  name: string;
+  description: string;
+};
+
+type ImportForm = {
+  name: string;
+  description: string;
+  importUrl: string;
+};
+
+type TemplateForm = {
+  name: string;
+  description: string;
+  layers: {
+    type: string;
+    size: number;
+  }[];
+};
+
+type FormData = NameDescriptionForm | ImportForm | TemplateForm;
 
 export function useDialogContext() {
   const context = useContext(DialogContext);
@@ -24,7 +47,28 @@ export function useDialogContext() {
 }
 
 export default function DashboardActionButtonCluster() {
-  const [formData, setFormData] = useState<Record<string, any>>({});
+  const [formData, setFormData] = useState<Record<string, any>>({
+    name: "",
+    description: "",
+  });
+
+  const initializeForm = (formName: string) => {
+    let initialForm;
+    switch (formName) {
+      case "New Neural Network":
+        initialForm = { name: "", description: "" };
+        break;
+      case "Import":
+        initialForm = { name: "", description: "", importUrl: "" };
+        break;
+      case "Create Template":
+        initialForm = { name: "", description: "", layers: [] };
+        break;
+      default:
+        initialForm = { name: "", description: "" };
+    }
+    setFormData(initialForm);
+  };
 
   const handleCreateNNSubmit = () => {
     console.log("Create neural network called with data: ", formData);
@@ -82,7 +126,12 @@ export default function DashboardActionButtonCluster() {
 
   return (
     <DialogContext.Provider
-      value={{ formData, setFormData, resetForm: () => setFormData({}) }}
+      value={{
+        formData,
+        setFormData,
+        resetForm: () => initializeForm("New Neural Network"),
+        initializeForm,
+      }}
     >
       <div className="flex flex-col justify-start p-8 lg:grid lg:grid-cols-3 lg:gap-8">
         {actionButtons.map((props, index) => (
