@@ -3,7 +3,9 @@ import DashboardItem from "./dashboard-item";
 import { BiImport } from "react-icons/bi";
 import Searchbar from "./searchbar";
 import Filters from "./filters";
-import DashboardActionButton, { ActionButtonProps } from "./action-button";
+import DashboardActionButton, {
+  ActionButtonProps,
+} from "./dashboard-action-cluster/action-button";
 
 export default function DashboardGrid() {
   const handleCreateNNPress = () => {};

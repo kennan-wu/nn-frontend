@@ -15,7 +15,7 @@ import {
 import { Separator } from "@radix-ui/react-separator";
 import { BiImport } from "react-icons/bi";
 import { HiOutlineSparkles, HiOutlineTemplate } from "react-icons/hi";
-import DashboardActionButtonCluster from "../components/action-button-cluster";
+import DashboardActionButtonCluster from "../components/dashboard-action-cluster/action-button-cluster";
 
 const nonActiveSidebarData = [
   {
