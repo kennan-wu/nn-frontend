@@ -4,8 +4,9 @@ import { HiOutlineSparkles, HiOutlineTemplate } from "react-icons/hi";
 import { BiImport } from "react-icons/bi";
 import DashboardActionButton from "./action-button";
 import ActionDialog from "./action-dialog";
-import NameDescriptionForm from "../name-description-form";
+import NameDescriptionForm from "./name-description-form";
 import { createContext, useContext, useState } from "react";
+import ImportFileForm from "./import-file-form";
 
 type DialogContextType = {
   formData: Record<string, any>;
@@ -100,9 +101,10 @@ export default function DashboardActionButtonCluster() {
       },
       dialogProps: {
         title: "Import Neural Network",
-        subtitle: "Import a neural network from a file.",
+        subtitle:
+          "Choose a .keras file you would like to import. Click import when you are done.",
         submitTitle: "Import",
-        dialogBody: NameDescriptionForm,
+        dialogBody: ImportFileForm,
         onSubmit: handleCreateNNSubmit,
       },
     },

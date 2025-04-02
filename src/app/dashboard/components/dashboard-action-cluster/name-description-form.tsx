@@ -1,4 +1,4 @@
-import { useDialogContext } from "./dashboard-action-cluster/action-button-cluster";
+import { useDialogContext } from "./action-button-cluster";
 
 export default function NameDescriptionForm() {
   const { formData, setFormData } = useDialogContext();
