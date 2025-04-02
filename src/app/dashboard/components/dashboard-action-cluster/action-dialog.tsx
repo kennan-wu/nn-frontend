@@ -15,26 +15,41 @@ export interface ActionDialogProps {
   submitTitle: string;
   children: React.ReactNode;
   onSubmit: () => void;
+  mainColor: string;
+  hoverColor: string;
 }
 
-export default function ActionDialog(props: ActionDialogProps) {
-  const { resetForm } = useDialogContext();
+export default function ActionDialog({
+  title,
+  subtitle,
+  submitTitle,
+  children,
+  onSubmit,
+  mainColor,
+  hoverColor,
+}: ActionDialogProps) {
+  const { resetForm, disableButton } = useDialogContext();
 
   const handleSubmit = () => {
-    props.onSubmit();
+    onSubmit();
     resetForm();
   };
 
   return (
     <DialogContent className="sm:max-w-[425px]">
       <DialogHeader>
-        <DialogTitle>{props.title}</DialogTitle>
-        <DialogDescription>{props.subtitle}</DialogDescription>
+        <DialogTitle>{title}</DialogTitle>
+        <DialogDescription>{subtitle}</DialogDescription>
       </DialogHeader>
-      {props.children}
+      {children}
       <DialogFooter>
-        <Button type="submit" onClick={handleSubmit}>
-          {props.submitTitle}
+        <Button
+          type="submit"
+          onClick={handleSubmit}
+          disabled={disableButton}
+          className={`${mainColor} ${hoverColor}`}
+        >
+          {submitTitle}
         </Button>
       </DialogFooter>
     </DialogContent>

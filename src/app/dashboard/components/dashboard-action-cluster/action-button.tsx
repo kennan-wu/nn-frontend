@@ -6,13 +6,13 @@ import { useDialogContext } from "./action-button-cluster";
 
 export default function DashboardActionButton({
   hoverColor,
-  iconColor,
+  mainColor,
   Icon,
   actionName,
   children,
 }: {
   hoverColor: string;
-  iconColor: string;
+  mainColor: string;
   Icon: IconType;
   actionName: string;
   children: React.ReactElement<typeof ActionDialog>;
@@ -28,7 +28,7 @@ export default function DashboardActionButton({
           onClick={() => initializeForm(actionName)}
         >
           <div
-            className={`${iconColor} lg:rounded-full lg:p-2 lg:block hidden`}
+            className={`${mainColor} lg:rounded-full lg:p-2 lg:block hidden`}
           >
             <Icon className="w-8 h-8 text-white" />
           </div>

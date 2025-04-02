@@ -13,6 +13,8 @@ type DialogContextType = {
   setFormData: (data: Record<string, any>) => void;
   resetForm: () => void;
   initializeForm: (formName: string) => void;
+  disableButton: boolean;
+  hideButton: boolean;
 };
 
 const DialogContext = createContext<DialogContextType | undefined>(undefined);
@@ -79,9 +81,7 @@ export default function DashboardActionButtonCluster() {
     {
       buttonProps: {
         actionName: "New Neural Network",
-        iconColor: "lg:bg-blue-400",
         Icon: HiOutlineSparkles,
-        hoverColor: "hover:bg-blue-200",
       },
       dialogProps: {
         title: "Create New Neural Network",
@@ -91,13 +91,13 @@ export default function DashboardActionButtonCluster() {
         dialogBody: NameDescriptionForm,
         onSubmit: handleCreateNNSubmit,
       },
+      mainColor: "bg-blue-400",
+      hoverColor: "hover:bg-blue-200",
     },
     {
       buttonProps: {
         actionName: "Import",
-        iconColor: "lg:bg-orange-400",
         Icon: BiImport,
-        hoverColor: "hover:bg-orange-200",
       },
       dialogProps: {
         title: "Import Neural Network",
@@ -107,13 +107,13 @@ export default function DashboardActionButtonCluster() {
         dialogBody: ImportFileForm,
         onSubmit: handleCreateNNSubmit,
       },
+      mainColor: "bg-orange-400",
+      hoverColor: "hover:bg-orange-200",
     },
     {
       buttonProps: {
         actionName: "Create Template",
-        iconColor: "lg:bg-green-600",
         Icon: HiOutlineTemplate,
-        hoverColor: "hover:bg-green-200",
       },
       dialogProps: {
         title: "Create Neural Network Template",
@@ -123,6 +123,8 @@ export default function DashboardActionButtonCluster() {
         dialogBody: NameDescriptionForm,
         onSubmit: handleCreateNNSubmit,
       },
+      mainColor: "bg-green-600",
+      hoverColor: "hover:bg-green-200",
     },
   ];
 
@@ -133,12 +135,23 @@ export default function DashboardActionButtonCluster() {
         setFormData,
         resetForm: () => initializeForm("New Neural Network"),
         initializeForm,
+        disableButton: true,
+        hideButton: false,
       }}
     >
       <div className="flex flex-col justify-start p-8 lg:grid lg:grid-cols-3 lg:gap-8">
         {actionButtons.map((props, index) => (
-          <DashboardActionButton {...props.buttonProps} key={index}>
-            <ActionDialog {...props.dialogProps}>
+          <DashboardActionButton
+            {...props.buttonProps}
+            mainColor={props.mainColor}
+            hoverColor={props.hoverColor}
+            key={index}
+          >
+            <ActionDialog
+              {...props.dialogProps}
+              mainColor={props.mainColor}
+              hoverColor={props.hoverColor}
+            >
               {props.dialogProps.dialogBody && <props.dialogProps.dialogBody />}
             </ActionDialog>
           </DashboardActionButton>
