@@ -65,7 +65,7 @@ export type CreateForm = {
   layers: {
     name: string;
     activation: string;
-    neuronCount: number;
+    neuronCount: string;
   }[];
 };
 
@@ -94,8 +94,8 @@ export const initializeForm = (formName: string) => {
         name: "",
         description: "",
         layers: [
-          { name: "Input Layer", activation: "", neuronCount: 1 },
-          { name: "Output Layer", activation: "", neuronCount: 1 },
+          { name: "Input Layer", activation: "", neuronCount: "" },
+          { name: "Output Layer", activation: "", neuronCount: "" },
         ],
       };
       break;
