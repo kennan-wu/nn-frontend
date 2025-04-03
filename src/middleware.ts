@@ -52,7 +52,7 @@ export default async function middleware(req: NextRequest) {
 // Helper functions
 async function validateToken(token: string) {
   try {
-    return await authApi.validateJwt(token);
+    return await authApi.validateUser(token);
   } catch {
     return null;
   }

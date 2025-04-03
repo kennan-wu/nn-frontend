@@ -66,7 +66,7 @@ class AuthApi {
     }
   }
 
-  async validateJwt(idToken: string) {
+  async validateUser(idToken: string) {
     try {
       const response = await this.api.get("/me", {
         headers: { Cookie: `id_token=${idToken}` },
