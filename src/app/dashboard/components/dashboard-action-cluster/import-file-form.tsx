@@ -1,5 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { useDialogContext } from "./action-button-cluster";
 import { BiImport } from "react-icons/bi";
 import { Input } from "@/components/ui/input";
 import { useCallback } from "react";
@@ -7,8 +6,6 @@ import { useDropzone } from "react-dropzone";
 import { DialogDescription } from "@/components/ui/dialog";
 
 export default function ImportFileForm() {
-  const { formData, hideButton } = useDialogContext();
-
   const onDrop = useCallback((acceptedFiles: File[]) => {
     if (acceptedFiles && acceptedFiles.length > 0) {
       console.log("file accepted", acceptedFiles);
