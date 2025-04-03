@@ -1,4 +1,5 @@
 import authApi from "@/services/auth-service-apis";
+import { cookies } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 const publicRoutes = ["/auth/login", "/auth/signup", "/auth/forgot"];
@@ -6,8 +7,10 @@ const publicRoutes = ["/auth/login", "/auth/signup", "/auth/forgot"];
 export default async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
   const isPublicRoute = publicRoutes.includes(pathname);
-  const idToken = req.cookies.get("id_token")?.value;
-  const refreshToken = req.cookies.get("refresh_token")?.value;
+
+  const cookieStore = await cookies();
+  const idToken = cookieStore.get("id_token")?.value;
+  const refreshToken = cookieStore.get("refresh_token")?.value;
 
   // Case 1: Public route with valid token - redirect to home
   if (isPublicRoute && idToken) {
@@ -66,7 +69,7 @@ async function refreshIdToken(refreshToken: string) {
 const redirectToLogin = (req: NextRequest) =>
   NextResponse.redirect(new URL("/auth/login", req.nextUrl));
 const redirectToHome = (req: NextRequest) =>
-  NextResponse.redirect(new URL("/dashboard/projects", req.nextUrl));
+  NextResponse.redirect(new URL("/", req.nextUrl));
 
 export const config = {
   matcher: ["/((?!api|_next/static|_next/image|favicon.ico|images/).*)"],
