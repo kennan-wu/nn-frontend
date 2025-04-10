@@ -30,7 +30,7 @@ class AuthApi {
 
   async oauth(refresh: boolean) {
     const url = new URL(
-      `${process.env.NEXT_PUBLIC_AUTH_API_BASE_URL}/auth/oauth/authorize`
+      `${process.env.NEXT_PUBLIC_AUTH_API_BASE_URL}auth/oauth/authorize`
     );
     if (refresh) {
       url.searchParams.append("refresh", "true");
